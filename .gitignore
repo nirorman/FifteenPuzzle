@@ -6,3 +6,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.pyc
+
+# Distribution / packaging
+build/
+dist/
+eggs/
+*.egg-info/
+*.egg

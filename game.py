@@ -1,6 +1,6 @@
 from board import Board
 from direction import Direction
-from users_move_enum import UsersMoveEnum
+from users_move_enum import UsersMove
 from printer import Printer
 
 
@@ -23,27 +23,27 @@ class Game(object):
 
     def evaluate_users_move(self, user_input_char):
         if user_input_char == 'q':
-            return UsersMoveEnum.ABORT_GAME
+            return UsersMove.ABORT_GAME
         elif Direction.is_arrow_key(user_input_char):
             direction = Direction.get_direction_from_key(user_input_char)
             if Board.is_move_legal(direction, self.empty_cell_location):
-                return UsersMoveEnum.LEGAL_MOVE
+                return UsersMove.LEGAL_MOVE
             else:
-                return UsersMoveEnum.ILLEGAL_MOVE
+                return UsersMove.ILLEGAL_MOVE
         else:
-            return UsersMoveEnum.ILLEGAL_CHAR
+            return UsersMove.ILLEGAL_CHAR
 
-    def act_on_users_move(self, new_game_state, user_input_char):
-        # type: (UsersMoveEnum, str) -> int
+    def act_on_users_move(self, users_move, user_input_char):
+        # type: (UsersMove, str) -> bool
         is_game_finished = False
-        if new_game_state == UsersMoveEnum.ABORT_GAME:
+        if users_move == UsersMove.ABORT_GAME:
             Printer.print_game_aborted(self.number_of_moves_taken)
             is_game_finished = True
-        elif new_game_state == UsersMoveEnum.ILLEGAL_MOVE:
+        elif users_move == UsersMove.ILLEGAL_MOVE:
             Printer.print_illegal_move()
-        elif new_game_state == UsersMoveEnum.ILLEGAL_CHAR:
+        elif users_move == UsersMove.ILLEGAL_CHAR:
             Printer.print_illegal_char(user_input_char)
-        elif new_game_state == UsersMoveEnum.LEGAL_MOVE:
+        elif users_move == UsersMove.LEGAL_MOVE:
             self._make_a_users_move(user_input_char)
             if self.board == Board.get_winning_board():
                 Printer.print_board(self.board)

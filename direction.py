@@ -2,10 +2,10 @@ from enum import Enum
 
 
 class Direction(Enum):
-    UP = 1
-    DOWN = 2
-    LEFT = 3
-    RIGHT = 4
+    UP = '\x1b[A'
+    DOWN = '\x1b[B'
+    LEFT = '\x1b[C'
+    RIGHT = '\x1b[D'
 
     @staticmethod
     def get_key_direction_map():
